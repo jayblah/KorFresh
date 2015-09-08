@@ -38,7 +38,7 @@ namespace _xcsoft__Information
             E = new Spell(SpellSlot.E);
             R = new Spell(SpellSlot.R);
 
-            Menu = new Menu("[xcsoft] Information", "xcsoft_information", true);
+            Menu = new Menu("Information by xcsoft", "xcsoft_information", true);
             TargetSelector.AddToMenu(Menu.AddSubMenu(new Menu("Target Selector", "Target Selector")));
             Menu.AddToMainMenu();
 

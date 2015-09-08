@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>_xcsoft__Information</RootNamespace>
-    <AssemblyName>[xcsoft] Information</AssemblyName>
+    <AssemblyName>Information by xcsoft</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PreBuildEvent />
