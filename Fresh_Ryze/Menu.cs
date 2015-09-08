@@ -77,7 +77,7 @@ namespace FreshRyze
 
             var Misc = new Menu("Misc", "Misc");
             {
-                Misc.AddItem(new MenuItem("AutoLasthit", "Auto LastHit with Spell").SetValue(true));
+                Misc.AddItem(new MenuItem("AutoLasthit", "Auto LastHit with Spell Q,E").SetValue(true));
                 Misc.AddItem(new MenuItem("WGap", "Auto W On GapClosers").SetValue(true));
             }
             _MainMenu.AddSubMenu(Misc);
@@ -168,9 +168,20 @@ namespace FreshRyze
                     }
                 }                
             }
-            var RyzePassive = ObjectManager.Player.Buffs.Find(DrawFX => DrawFX.Name == "ryzepassivestack" && DrawFX.IsValidBuff()).Count;
-            Drawing.DrawText(200, 200, System.Drawing.Color.Aqua, RyzePassive.ToString());
-            if (_MainMenu.Item("AutoLasthit").GetValue<bool>() && (RyzePassive != null || RyzePassive < 4))
+            var PassiveStack = 0;            
+            var RyzePassive = ObjectManager.Player.Buffs.Find(x => x.Name == "ryzepassivestack" && x.IsValidBuff());
+            var recall = ObjectManager.Player.Buffs.Find(x => x.Name == "recall" && x.IsValidBuff());
+            if (RyzePassive != null)
+            {
+                PassiveStack = RyzePassive.Count;
+            } else
+            {
+                PassiveStack = 0;
+            }
+            
+            Drawing.DrawText(200, 200, System.Drawing.Color.Aqua, PassiveStack.ToString());
+            
+            if (_MainMenu.Item("AutoLasthit").GetValue<bool>() && (PassiveStack < 4) && recall == null)
             {
                 var MinionTarget = MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Enemy);
                 if (MinionTarget.Count <= 0) { return; }
@@ -180,12 +191,12 @@ namespace FreshRyze
                     var qTarget = MinionTarget.Where(x => x.IsValidTarget(Q.Range) && Q.GetPrediction(x).Hitchance >= HitChance.Medium && Q.IsKillable(x)).OrderByDescending(x => x.Health).FirstOrDefault();
                     if (qTarget != null && Q.IsReady()) { Q.Cast(qTarget); }
                 }
-                if (W.IsReady())
-                {
-                    var wTarget = MinionTarget.Where(x => x.IsValidTarget(W.Range) && W.IsKillable(x)).OrderByDescending(x => x.Health).FirstOrDefault();
-                    if (wTarget != null && W.IsReady()) { W.Cast(wTarget); }
-                }
-                if (E.IsReady())
+                // else if (W.IsReady())
+                 //{
+                 //var wTarget = MinionTarget.Where(x => x.IsValidTarget(W.Range) && W.IsKillable(x)).OrderByDescending(x => x.Health).FirstOrDefault();
+                 //if (wTarget != null && W.IsReady()) { W.Cast(wTarget); }
+                 //} 
+                else if (E.IsReady())
                 {
                     var eTarget = MinionTarget.Where(x => x.IsValidTarget(E.Range) && E.IsKillable(x)).OrderByDescending(x => x.Health).FirstOrDefault();
                     if (eTarget != null && E.IsReady()) { E.Cast(eTarget); }
