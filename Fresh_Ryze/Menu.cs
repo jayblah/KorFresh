@@ -179,7 +179,7 @@ namespace FreshRyze
                 PassiveStack = 0;
             }
             
-            Drawing.DrawText(200, 200, System.Drawing.Color.Aqua, PassiveStack.ToString());
+            //Drawing.DrawText(200, 200, System.Drawing.Color.Aqua, PassiveStack.ToString());
             
             if (_MainMenu.Item("AutoLasthit").GetValue<bool>() && (PassiveStack < 4) && recall == null)
             {
