@@ -16,6 +16,7 @@ namespace ShadowTracker
         static float EndTime;
         static Vector3 Enemy_Flash_Start, Enemy_Flash_End;
         static float Enemy_Flash_Time;
+        static int Spell_Flash = 450;
 
         static void Main(string[] args)
         {
@@ -41,12 +42,7 @@ namespace ShadowTracker
                     }
                 }
             }
-            if (sender.IsMe)
-            {
-                Enemy_Flash_Start = args.Start;
-                Enemy_Flash_End = args.End;
-                Enemy_Flash_Time = Game.ClockTime + 3;
-            }
+            //if (sender.IsMe){Enemy_Flash_Start = args.Start;Enemy_Flash_End = args.End;Enemy_Flash_Time = Game.ClockTime + 3;} Test IsMe
         }
 
         private static void Game_OnGameLoad(EventArgs args)
@@ -75,10 +71,10 @@ namespace ShadowTracker
             if (Enemy_Flash_Time > Game.ClockTime)  // 점멸 도착 위치 표시
             {
                 Console.Write("\n"+Enemy_Flash_Start.Distance(Enemy_Flash_End));
-                if (Enemy_Flash_Start.Distance(Enemy_Flash_End) > 450)
+                if (Enemy_Flash_Start.Distance(Enemy_Flash_End) > Spell_Flash)
                 {                    
-                    var dis = Enemy_Flash_Start.Distance(Enemy_Flash_End) - 450;
-                    Enemy_Flash_End.Extend(Enemy_Flash_Start, -dis);
+                    var dis = Enemy_Flash_Start.Distance(Enemy_Flash_End) - Spell_Flash;
+                    Enemy_Flash_End = Enemy_Flash_End.Extend(Enemy_Flash_Start, +dis);
                 }
                 Render.Circle.DrawCircle(Enemy_Flash_Start, 50, System.Drawing.Color.HotPink, 1);
                 Render.Circle.DrawCircle(Enemy_Flash_End, 50, System.Drawing.Color.Pink, 2);
