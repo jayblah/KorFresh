@@ -12,11 +12,10 @@ namespace ShadowTracker
     class Program
     {
         private static Menu _MainMenu;
-        private static Obj_AI_Hero Player;
-        static float EndTime;
-        static Vector3 Enemy_Flash_Start, Enemy_Flash_End;
-        static float Enemy_Flash_Time;
-        static int Spell_Flash = 450;
+        private static Obj_AI_Hero Player;        
+        static Vector3 Enemy_Flash_Start, Enemy_Flash_End, Enemy_Ezreal_Start, Enemy_Ezreal_End;
+        static float Enemy_Flash_Time, Enemy_Ezreal_Time;
+        static int Spell_Flash = 450, EzrealArcaneShift = 475;
 
         static void Main(string[] args)
         {
@@ -28,8 +27,10 @@ namespace ShadowTracker
 
         private static void Obj_AI_Hero_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            //message = "\n" + "Name: " + sender.BaseSkinName + "\n" + "SpellName: " + args.SData.Name + "\n"+"Start: " + args.Start + "\n"+ "End: " + args.End;                
-            //EndTime = Game.ClockTime + 3;                
+                //var message = "\n" + "Name: " + sender.BaseSkinName + "\n" + "SpellName: " + args.SData.Name + "\n" + "Start: " + args.Start + "\n" + "End: " + args.End;
+                //Console.Write(message);
+            
+            
             foreach (var enemy in HeroManager.Enemies)
             {                
                 if (enemy.BaseSkinName == sender.BaseSkinName && _MainMenu.Item(enemy.BaseSkinName).GetValue<bool>())   // 스펠사용자가 true인 적과 같은지 확인
@@ -38,11 +39,18 @@ namespace ShadowTracker
                     {
                         Enemy_Flash_Start = args.Start;
                         Enemy_Flash_End = args.End;
-                        Enemy_Flash_Time = Game.ClockTime + 3;
+                        Enemy_Flash_Time = Game.ClockTime + 2;
+                    }
+
+                    if(args.SData.Name == "EzrealArcaneShift")
+                    {
+                        Enemy_Ezreal_Start = args.Start;
+                        Enemy_Ezreal_End = args.End;
+                        Enemy_Ezreal_Time = Game.ClockTime + 2;
                     }
                 }
             }
-            //if (sender.IsMe){Enemy_Flash_Start = args.Start;Enemy_Flash_End = args.End;Enemy_Flash_Time = Game.ClockTime + 3;} Test IsMe
+            if (sender.IsMe){Enemy_Flash_Start = args.Start;Enemy_Flash_End = args.End;Enemy_Flash_Time = Game.ClockTime + 3;} //Test IsMe
         }
 
         private static void Game_OnGameLoad(EventArgs args)
@@ -70,19 +78,42 @@ namespace ShadowTracker
         {
             if (Enemy_Flash_Time > Game.ClockTime)  // 점멸 도착 위치 표시
             {
-                Console.Write("\n"+Enemy_Flash_Start.Distance(Enemy_Flash_End));
+                //Console.Write("\n"+Enemy_Flash_Start.Distance(Enemy_Flash_End));
                 if (Enemy_Flash_Start.Distance(Enemy_Flash_End) > Spell_Flash)
                 {                    
                     var dis = Enemy_Flash_Start.Distance(Enemy_Flash_End) - Spell_Flash;
                     Enemy_Flash_End = Enemy_Flash_End.Extend(Enemy_Flash_Start, +dis);
                 }
-                Render.Circle.DrawCircle(Enemy_Flash_Start, 50, System.Drawing.Color.HotPink, 1);
-                Render.Circle.DrawCircle(Enemy_Flash_End, 50, System.Drawing.Color.Pink, 2);
+                Render.Circle.DrawCircle(Enemy_Flash_Start, 50, System.Drawing.Color.PaleVioletRed, 1);
+                Render.Circle.DrawCircle(Enemy_Flash_End, 50, System.Drawing.Color.LawnGreen, 1);                
                 var from = Drawing.WorldToScreen(Enemy_Flash_Start);
                 var to = Drawing.WorldToScreen(Enemy_Flash_End);
-                Drawing.DrawLine(from[0], from[1], to[0], to[1], 3, System.Drawing.Color.White);
+                Drawing.DrawLine(from[0], from[1], to[0], to[1], 1, System.Drawing.Color.LawnGreen);
+                Drawing.DrawText(from[0], from[1], System.Drawing.Color.PaleVioletRed, "Start");
+                Drawing.DrawText(to[0], to[1], System.Drawing.Color.LawnGreen, "End");
             }
-            //Render.Circle.DrawCircle(SpellEnd, 50, System.Drawing.Color.HotPink,2);
+
+            if (Enemy_Ezreal_Time > Game.ClockTime) // 이즈리얼 비전이동 표시
+            {
+                if (Enemy_Ezreal_Start.Distance(Enemy_Ezreal_End) > EzrealArcaneShift)
+                {
+                    var dis = Enemy_Ezreal_Start.Distance(Enemy_Ezreal_End) - EzrealArcaneShift;
+                    Enemy_Ezreal_End = Enemy_Ezreal_End.Extend(Enemy_Ezreal_Start, +dis);
+                }
+                Render.Circle.DrawCircle(Enemy_Ezreal_Start, 50, System.Drawing.Color.PaleVioletRed, 1);
+                Render.Circle.DrawCircle(Enemy_Ezreal_End, 50, System.Drawing.Color.LawnGreen, 1);
+                var from = Drawing.WorldToScreen(Enemy_Ezreal_Start);
+                var to = Drawing.WorldToScreen(Enemy_Ezreal_End);
+                Drawing.DrawLine(from[0], from[1], to[0], to[1], 1, System.Drawing.Color.LawnGreen);
+                Drawing.DrawText(from[0], from[1], System.Drawing.Color.PaleVioletRed, "Start");
+                Drawing.DrawText(to[0], to[1], System.Drawing.Color.LawnGreen, "End");
+            }
+
+            // 샤코 디코이
+            // 르블랑 분신, 샤코 분신
+            // 렝가 은신, 트위치 은신, 아칼리장막            
+            // 핑 여부(렉사이궁, 쉔궁)
+            
         }
 
         private static void Game_OnGameUpdate(EventArgs args)
