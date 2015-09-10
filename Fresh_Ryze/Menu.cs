@@ -68,10 +68,10 @@ namespace FreshRyze
 
             var JungleClear = new Menu("JungleClear", "JungleClear");
             {
-                JungleClear.AddItem(new MenuItem("Use Q", "Use Q").SetValue(true));
-                JungleClear.AddItem(new MenuItem("Use W", "Use W").SetValue(true));
-                JungleClear.AddItem(new MenuItem("Use E", "Use E").SetValue(true));
-                JungleClear.AddItem(new MenuItem("ManaRate", "Mana %").SetValue(new Slider(20)));
+                JungleClear.AddItem(new MenuItem("JUse Q", "Use Q").SetValue(true));
+                JungleClear.AddItem(new MenuItem("JUse W", "Use W").SetValue(true));
+                JungleClear.AddItem(new MenuItem("JUse E", "Use E").SetValue(true));
+                JungleClear.AddItem(new MenuItem("JManaRate", "Mana %").SetValue(new Slider(20)));
             }
             _MainMenu.AddSubMenu(JungleClear);
 
@@ -119,19 +119,19 @@ namespace FreshRyze
             var ETarget = TargetSelector.GetTarget(E.Range, TargetSelector.DamageType.Magical);            
             if (_OrbWalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo)
             {                
-                if (QTarget != null && Q.IsReady())
+                if (QTarget != null && Q.IsReady() && _MainMenu.Item("UseQ").GetValue<bool>())
                 {
                     Q.Cast(QTarget);
                 }
-                if (WTarget != null && W.IsReady())
+                if (WTarget != null && W.IsReady() && _MainMenu.Item("UseW").GetValue<bool>())
                 {
                     W.Cast(WTarget);
                 }
-                if (ETarget != null && E.IsReady())
+                if (ETarget != null && E.IsReady() && _MainMenu.Item("UseE").GetValue<bool>())
                 {
                     E.Cast(ETarget);
                 }
-                if (ETarget != null && R.IsReady() && Q.IsReady() && E.IsReady())
+                if (ETarget != null && R.IsReady() && Q.IsReady() && E.IsReady() && _MainMenu.Item("UseR").GetValue<bool>())
                 {
                     R.Cast();
                 }
@@ -147,27 +147,47 @@ namespace FreshRyze
             if(_OrbWalker.ActiveMode == Orbwalking.OrbwalkingMode.LaneClear)
             {
                 var MinionTarget = MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Enemy);
+                var JungleTarget = MinionManager.GetMinions(Q.Range, MinionTypes.All, MinionTeam.Neutral);
                 if (MinionTarget.Count <= 0) { return; }                
 
                 foreach(var minion in MinionTarget)
                 {
                     if(ObjectManager.Player.ManaPercent > _MainMenu.Item("LManaRate").GetValue<Slider>().Value)
                     {
-                        if (Q.IsReady())
+                        if (Q.IsReady() && _MainMenu.Item("LUseQ").GetValue<bool>())
                         {
                             Q.CastIfHitchanceEquals(minion, HitChance.VeryHigh, true);
                         }
-                        if (W.IsReady())
+                        if (W.IsReady() &&  _MainMenu.Item("LUseQ").GetValue<bool>())
                         {
                             W.Cast(minion, true);
                         }
-                        if (E.IsReady())
+                        if (E.IsReady() && _MainMenu.Item("LUseQ").GetValue<bool>())
                         {
                             E.Cast(minion, true);
                         }
                     }
-                }                
+                }
+                foreach (var jungle in JungleTarget)
+                {
+                    if (ObjectManager.Player.ManaPercent > _MainMenu.Item("JManaRate").GetValue<Slider>().Value)
+                    {
+                        if (Q.IsReady() && _MainMenu.Item("JUseQ").GetValue<bool>())
+                        {
+                            Q.CastIfHitchanceEquals(jungle, HitChance.VeryHigh, true);
+                        }
+                        if (W.IsReady() && _MainMenu.Item("JUseQ").GetValue<bool>())
+                        {
+                            W.Cast(jungle, true);
+                        }
+                        if (E.IsReady() && _MainMenu.Item("JUseQ").GetValue<bool>())
+                        {
+                            E.Cast(jungle, true);
+                        }
+                    }
+                }
             }
+                     
             var PassiveStack = 0;            
             var RyzePassive = ObjectManager.Player.Buffs.Find(x => x.Name == "ryzepassivestack" && x.IsValidBuff());
             var recall = ObjectManager.Player.Buffs.Find(x => x.Name == "recall" && x.IsValidBuff());
