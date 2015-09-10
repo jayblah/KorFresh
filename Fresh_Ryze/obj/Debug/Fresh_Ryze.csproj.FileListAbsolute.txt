@@ -1,1 +1,2 @@
 C:\Users\tegtt\Documents\Visual Studio 2015\Projects\Fresh_Ryze\Fresh_Ryze\bin\Release\Fresh_Ryze.exe.config
+C:\Users\tegtt\Documents\GitHub\LeagueSharp\Fresh_Ryze\bin\Release\Fresh_Ryze.exe.config

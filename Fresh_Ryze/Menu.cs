@@ -131,7 +131,7 @@ namespace FreshRyze
                 {
                     E.Cast(ETarget);
                 }
-                if (ETarget != null && R.IsReady())
+                if (ETarget != null && R.IsReady() && Q.IsReady() && E.IsReady())
                 {
                     R.Cast();
                 }
