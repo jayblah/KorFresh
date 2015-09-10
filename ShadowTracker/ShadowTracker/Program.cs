@@ -50,7 +50,7 @@ namespace ShadowTracker
                     }
                 }
             }
-            if (sender.IsMe){Enemy_Flash_Start = args.Start;Enemy_Flash_End = args.End;Enemy_Flash_Time = Game.ClockTime + 3;} //Test IsMe
+            //if (sender.IsMe){Enemy_Flash_Start = args.Start;Enemy_Flash_End = args.End;Enemy_Flash_Time = Game.ClockTime + 3;} //Test IsMe
         }
 
         private static void Game_OnGameLoad(EventArgs args)
