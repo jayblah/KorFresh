@@ -143,12 +143,12 @@ namespace ShadowTracker
 
             if (Enemy_Leblanc_Time > Game.ClockTime)
             {
-                Render.Circle.DrawCircle(Enemy_Leblanc_Position, 50, System.Drawing.Color.Green, 2);
+                Render.Circle.DrawCircle(Enemy_Leblanc_Position, 50, System.Drawing.Color.Green, 4);
             }
 
             if (Enemy_Shaco_Time > Game.ClockTime)
             {
-                Render.Circle.DrawCircle(Enemy_Shaco_Position, 50, System.Drawing.Color.Green, 2);
+                Render.Circle.DrawCircle(Enemy_Shaco_Position, 50, System.Drawing.Color.Green, 4);
             }
 
             if (Enemy_Monkey_Time > Game.ClockTime && Enemy_Monkey_Enable == true)
