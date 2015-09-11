@@ -77,7 +77,13 @@ namespace ShadowTracker
 
         private static void Game_OnGameLoad(EventArgs args)
         {
-            
+            _MainMenu = new Menu("ShadowTracker", "ShadowTracker", true);
+            var Draw = new Menu("Draw", "Draw");
+            {
+                Draw.AddItem(new MenuItem("Deburg", "Deburg").SetValue(true));
+            }
+            _MainMenu.AddSubMenu(Draw);
+
             var Enemy = new Menu("Enemy", "Enemy");
             {
                 foreach (var enemy in HeroManager.Enemies)
