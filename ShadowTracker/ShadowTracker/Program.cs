@@ -28,11 +28,11 @@ namespace ShadowTracker
 
         private static void Obj_AI_Hero_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (sender.IsMe)
-            {
-                var message = "\n" + "Name: " + sender.BaseSkinName + "\n" + "SpellName: " + args.SData.Name + "\n" + "Start: " + args.Start + "\n" + "End: " + args.End;
-                Console.Write(message);
-            }
+            //if (sender.IsMe)
+            //{
+                //var message = "\n" + "Name: " + sender.BaseSkinName + "\n" + "SpellName: " + args.SData.Name + "\n" + "Start: " + args.Start + "\n" + "End: " + args.End;
+                //Console.Write(message);
+            //}
             
             foreach (var enemy in HeroManager.Enemies)
             {                                
@@ -77,13 +77,7 @@ namespace ShadowTracker
 
         private static void Game_OnGameLoad(EventArgs args)
         {
-            _MainMenu = new Menu("ShadowTracker", "ShadowTracker", true);
-            var Draw = new Menu("Draw", "Draw");
-            {
-                Draw.AddItem(new MenuItem("Deburg", "Deburg").SetValue(true));
-            }
-            _MainMenu.AddSubMenu(Draw);
-
+            
             var Enemy = new Menu("Enemy", "Enemy");
             {
                 foreach (var enemy in HeroManager.Enemies)
@@ -112,7 +106,7 @@ namespace ShadowTracker
                 var to = Drawing.WorldToScreen(Enemy_Flash_End);
                 Drawing.DrawLine(from[0], from[1], to[0], to[1], 1, System.Drawing.Color.LawnGreen);
                 Drawing.DrawText(from[0], from[1], System.Drawing.Color.PaleVioletRed, "Start");
-                Drawing.DrawText(to[0], to[1], System.Drawing.Color.LawnGreen, "End");                
+                Drawing.DrawText(to[0], to[1], System.Drawing.Color.LawnGreen, "End");
             }
 
             if (Enemy_Ezreal_Time > Game.ClockTime) // 이즈리얼 비전이동 표시

@@ -118,7 +118,17 @@ namespace FreshRyze
             var WTarget = TargetSelector.GetTarget(W.Range, TargetSelector.DamageType.Magical);
             var ETarget = TargetSelector.GetTarget(E.Range, TargetSelector.DamageType.Magical);            
             if (_OrbWalker.ActiveMode == Orbwalking.OrbwalkingMode.Combo)
-            {                
+            {
+                var RyzePassive1 = ObjectManager.Player.Buffs.Find(x => x.Name == "ryzepassivestack" && x.IsValidBuff());
+                var PassiveStack1 = 0;
+                if (RyzePassive1 != null)
+                {
+                    PassiveStack1 = RyzePassive1.Count;
+                } else
+                {
+                    PassiveStack1 = 0;
+                }
+
                 if (QTarget != null && Q.IsReady() && _MainMenu.Item("UseQ").GetValue<bool>())
                 {
                     Q.Cast(QTarget);
@@ -131,7 +141,7 @@ namespace FreshRyze
                 {
                     E.Cast(ETarget);
                 }
-                if (ETarget != null && R.IsReady() && Q.IsReady() && E.IsReady() && _MainMenu.Item("UseR").GetValue<bool>())
+                if (ETarget != null && R.IsReady() && Q.IsReady() && E.IsReady() && _MainMenu.Item("UseR").GetValue<bool>() || PassiveStack1 == 4)
                 {
                     R.Cast();
                 }
@@ -188,7 +198,7 @@ namespace FreshRyze
                 }
             }
                      
-            var PassiveStack = 0;            
+            var PassiveStack = 0;
             var RyzePassive = ObjectManager.Player.Buffs.Find(x => x.Name == "ryzepassivestack" && x.IsValidBuff());
             var recall = ObjectManager.Player.Buffs.Find(x => x.Name == "recall" && x.IsValidBuff());
             if (RyzePassive != null)
