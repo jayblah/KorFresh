@@ -104,7 +104,8 @@ namespace FreshRyze
                 }
             }
 
-            if (MainMenu._MainMenu.Item("AutoLasthit").GetValue<bool>() && recall == null && RyzePassive.Count < 4 && (Program.Q.IsReady() || Program.E.IsReady()))
+            if (MainMenu._MainMenu.Item("AutoLasthit").GetValue<bool>() && LeagueSharp.Common.Orbwalking.OrbwalkingMode.Combo != MainMenu._OrbWalker.ActiveMode 
+                && recall == null && RyzePassive.Count < 4 && (Program.Q.IsReady() || Program.E.IsReady()))
             {
                 var MinionTarget = MinionManager.GetMinions(Program.Q.Range, MinionTypes.All, MinionTeam.Enemy);
                 var minion_QTarget = MinionTarget.Where(x => x.IsValidTarget(Program.Q.Range) && Program.Q.GetPrediction(x).Hitchance >= HitChance.Medium && Program.Q.IsKillable(x)).OrderByDescending(x => x.Health).FirstOrDefault();
@@ -117,6 +118,14 @@ namespace FreshRyze
                 {
                     Program.E.Cast(minion_ETarget);
                 }
+            }
+        }
+
+        public static void AntiGapcloser_OnEnemyGapcloser(ActiveGapcloser gapcloser)
+        {
+            if(!Program.Player.IsDead && MainMenu._MainMenu.Item("WGap").GetValue<bool>() && Program.W.CanCast(gapcloser.Sender))
+            {
+                Program.W.CastOnUnit(gapcloser.Sender);
             }
         }
     }

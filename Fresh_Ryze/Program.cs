@@ -39,6 +39,7 @@ namespace FreshRyze
 
             Drawing.OnDraw += OnDraw.Drawing_OnDraw;
             Game.OnUpdate += OnUpdate.OnGameUpdate;
+            AntiGapcloser.OnEnemyGapcloser += OnUpdate.AntiGapcloser_OnEnemyGapcloser;
         }
     }
 }
