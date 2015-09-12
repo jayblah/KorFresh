@@ -25,7 +25,7 @@ namespace FreshRyze
 
             if (MainMenu._OrbWalker.ActiveMode == LeagueSharp.Common.Orbwalking.OrbwalkingMode.Combo)   // Combo Mode
             {                
-                if (MainMenu._MainMenu.Item("UseR").GetValue<bool>() && Program.R.IsReady() && Program.Q.IsReady() && Program.E.IsReady() && RyzeStack > 2 && WTarget != null)
+                if (MainMenu._MainMenu.Item("UseR").GetValue<bool>() && Program.R.IsReady() && (Program.Q.IsReady() || Program.E.IsReady()) && RyzeStack > 2 && WTarget != null)
                 {
                     Program.R.Cast();
                 }
