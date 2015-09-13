@@ -41,7 +41,7 @@ namespace FreshRyze
                 Harass.AddItem(new MenuItem("HUseW", "Use W").SetValue(true));
                 Harass.AddItem(new MenuItem("HUseE", "Use E").SetValue(true));                
                 Harass.AddItem(new MenuItem("HManaRate", "Mana %").SetValue(new Slider(20)));
-                Harass.AddItem(new MenuItem("AutoHarass", "Auto Harass").SetValue(true));
+                Harass.AddItem(new MenuItem("AutoHarass", "Auto Harass").SetValue(false));
             }
             _MainMenu.AddSubMenu(Harass);
 
@@ -65,7 +65,7 @@ namespace FreshRyze
 
             var Misc = new Menu("Misc", "Misc");
             {
-                Misc.AddItem(new MenuItem("AutoLasthit", "Auto LastHit with Spell Q,E").SetValue(true));
+                Misc.AddItem(new MenuItem("AutoLasthit", "Auto LastHit with Spell Q,E").SetValue(false));
                 Misc.AddItem(new MenuItem("WGap", "Auto W On GapClosers").SetValue(true));
             }
             _MainMenu.AddSubMenu(Misc);
