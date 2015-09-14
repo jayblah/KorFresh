@@ -9,22 +9,25 @@ using LeagueSharp.Common;
 namespace FreshRyze
 {
     public static class OnUpdate
-    {        
+    {
+        public static int RyzeStack = 0, disStack = 0;
+        public static string DisTimeColor = string.Empty;
+        public static BuffInstance RyzePassive, Ryzepassivecharged;
+
         public static void OnGameUpdate(EventArgs args)
         {
-            
+            Program.Q.Collision = MainMenu._MainMenu.Item("ComboSelect").GetValue<bool>() ? true : false;
             var QTarget = TargetSelector.GetTarget(Program.Q.Range, TargetSelector.DamageType.Magical);
             var WTarget = TargetSelector.GetTarget(Program.W.Range, TargetSelector.DamageType.Magical);
             var ETarget = TargetSelector.GetTarget(Program.E.Range, TargetSelector.DamageType.Magical);
-            var RyzeStack = 0;
+            RyzePassive = ObjectManager.Player.Buffs.Find(DrawFX => DrawFX.Name == "ryzepassivestack" && DrawFX.IsValidBuff()); // 라이즈 스택
+            Ryzepassivecharged = ObjectManager.Player.Buffs.Find(DrawFX => DrawFX.Name == "ryzepassivecharged" && DrawFX.IsValidBuff());
 
-            var RyzePassive = ObjectManager.Player.Buffs.Find(DrawFX => DrawFX.Name == "ryzepassivestack" && DrawFX.IsValidBuff()); // 라이즈 스택
-            if(RyzePassive != null){RyzeStack = RyzePassive.Count;} else{RyzeStack = 0;}
-            var recall = ObjectManager.Player.Buffs.Find(x => x.Name == "recall" && x.IsValidBuff());
+            if (RyzePassive != null){RyzeStack = RyzePassive.Count;} else{RyzeStack = 0;}
+            var recall = ObjectManager.Player.Buffs.Find(x => x.Name == "recall" && x.IsValidBuff());            
 
-
-            if (MainMenu._OrbWalker.ActiveMode == LeagueSharp.Common.Orbwalking.OrbwalkingMode.Combo)   // Combo Mode
-            {                
+                if (MainMenu._OrbWalker.ActiveMode == LeagueSharp.Common.Orbwalking.OrbwalkingMode.Combo)   // Combo Mode
+                {                
                 if (MainMenu._MainMenu.Item("UseR").GetValue<bool>() && Program.R.IsReady() && (Program.Q.IsReady() || Program.E.IsReady()) && RyzeStack > 2 && WTarget != null)
                 {
                     Program.R.Cast();

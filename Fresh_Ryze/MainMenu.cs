@@ -32,6 +32,7 @@ namespace FreshRyze
                 Combo.AddItem(new MenuItem("UseW", "Use W").SetValue(true));
                 Combo.AddItem(new MenuItem("UseE", "Use E").SetValue(true));
                 Combo.AddItem(new MenuItem("UseR", "Use R").SetValue(true));
+                Combo.AddItem(new MenuItem("ComboSelect", "Q is NoCollision").SetValue(true));                
             }
             _MainMenu.AddSubMenu(Combo);
 
@@ -75,6 +76,8 @@ namespace FreshRyze
                 Draw.AddItem(new MenuItem("QRange", "Q Range").SetValue(true));
                 Draw.AddItem(new MenuItem("WRange", "W Range").SetValue(true));
                 Draw.AddItem(new MenuItem("ERange", "E Range").SetValue(true));
+                Draw.AddItem(new MenuItem("DisplayStack", "Display Stack").SetValue(true));
+                Draw.AddItem(new MenuItem("DisplayTime", "Display Time").SetValue(true));
             }
             _MainMenu.AddSubMenu(Draw);
 
