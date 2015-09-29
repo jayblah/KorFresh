@@ -26,23 +26,27 @@ namespace FreshRyze
             if (RyzePassive != null){RyzeStack = RyzePassive.Count;} else{RyzeStack = 0;}
             var recall = ObjectManager.Player.Buffs.Find(x => x.Name == "recall" && x.IsValidBuff());            
 
-                if (MainMenu._OrbWalker.ActiveMode == LeagueSharp.Common.Orbwalking.OrbwalkingMode.Combo)   // Combo Mode
-                {                
-                if (MainMenu._MainMenu.Item("UseR").GetValue<bool>() && Program.R.IsReady() && (Program.Q.IsReady() || Program.E.IsReady()) && RyzeStack > 2 && WTarget != null)
-                {
-                    Program.R.Cast();
-                }
-                if (MainMenu._MainMenu.Item("UseQ").GetValue<bool>() && Program.Q.IsReady() && QTarget != null)
-                {
-                    Program.Q.Cast(QTarget);
-                }
+             if (MainMenu._OrbWalker.ActiveMode == LeagueSharp.Common.Orbwalking.OrbwalkingMode.Combo)   // Combo Mode
+             {
                 if (MainMenu._MainMenu.Item("UseW").GetValue<bool>() && Program.W.IsReady() && WTarget != null)
                 {
                     Program.W.Cast(WTarget);
                 }
+                if ((MainMenu._MainMenu.Item("UseQ").GetValue<bool>() && Program.Q.IsReady() && QTarget != null) && (MainMenu._MainMenu.Item("UseE").GetValue<bool>() && Program.E.IsReady() && ETarget != null))
+                {
+                    Program.Q.Cast(QTarget);
+                }
+                if (MainMenu._MainMenu.Item("UseQ").GetValue<bool>() && Program.Q.IsReady() && QTarget != null)
+                {
+                    Program.Q.Cast(QTarget);
+                }                
                 if (MainMenu._MainMenu.Item("UseE").GetValue<bool>() && Program.E.IsReady() && ETarget != null)
                 {
                     Program.E.Cast(ETarget);
+                }
+                if (MainMenu._MainMenu.Item("UseR").GetValue<bool>() && Program.R.IsReady() && (Program.Q.IsReady() || Program.E.IsReady()) && RyzeStack > 2 && WTarget != null)
+                {
+                    Program.R.Cast();
                 }
             }
 
