@@ -28,6 +28,11 @@ namespace FreshRyze
 
              if (MainMenu._OrbWalker.ActiveMode == LeagueSharp.Common.Orbwalking.OrbwalkingMode.Combo)   // Combo Mode
              {
+                if (MainMenu._MainMenu.Item("UseR").GetValue<bool>() && Program.R.IsReady() && (Program.Q.IsReady() || Program.E.IsReady()) && 
+                    (RyzeStack > 2 || Ryzepassivecharged != null) && WTarget != null)
+                {
+                    Program.R.Cast();
+                }
                 if (MainMenu._MainMenu.Item("UseW").GetValue<bool>() && Program.W.IsReady() && WTarget != null)
                 {
                     Program.W.Cast(WTarget);
@@ -43,11 +48,7 @@ namespace FreshRyze
                 if (MainMenu._MainMenu.Item("UseE").GetValue<bool>() && Program.E.IsReady() && ETarget != null)
                 {
                     Program.E.Cast(ETarget);
-                }
-                if (MainMenu._MainMenu.Item("UseR").GetValue<bool>() && Program.R.IsReady() && (Program.Q.IsReady() || Program.E.IsReady()) && RyzeStack > 2 && WTarget != null)
-                {
-                    Program.R.Cast();
-                }
+                }                
             }
 
             if((MainMenu._OrbWalker.ActiveMode == LeagueSharp.Common.Orbwalking.OrbwalkingMode.Mixed || MainMenu._MainMenu.Item("AutoHarass").GetValue<bool>()) 
