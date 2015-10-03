@@ -32,7 +32,7 @@ namespace FreshRyze
                 Combo.AddItem(new MenuItem("UseW", "Use W").SetValue(true));
                 Combo.AddItem(new MenuItem("UseE", "Use E").SetValue(true));
                 Combo.AddItem(new MenuItem("UseR", "Use R").SetValue(true));
-                Combo.AddItem(new MenuItem("ComboSelect", "Q is NoCollision").SetValue(true));                
+                Combo.AddItem(new MenuItem("ComboSelect", "Check Collision for Q").SetValue(true));                
             }
             _MainMenu.AddSubMenu(Combo);
 
@@ -41,33 +41,33 @@ namespace FreshRyze
                 Harass.AddItem(new MenuItem("HUseQ", "Use Q").SetValue(true));
                 Harass.AddItem(new MenuItem("HUseW", "Use W").SetValue(true));
                 Harass.AddItem(new MenuItem("HUseE", "Use E").SetValue(true));                
-                Harass.AddItem(new MenuItem("HManaRate", "Mana %").SetValue(new Slider(20)));
-                Harass.AddItem(new MenuItem("AutoHarass", "Auto Harass").SetValue(false));
+                Harass.AddItem(new MenuItem("HManaRate", "Min. % Mana").SetValue(new Slider(20)));
+                Harass.AddItem(new MenuItem("AutoHarass", "Auto-Harass").SetValue(false));
             }
             _MainMenu.AddSubMenu(Harass);
 
-            var LaneClear = new Menu("LaneClear", "LaneClear");
+            var LaneClear = new Menu("Lane Clear", "LaneClear");
             {
                 LaneClear.AddItem(new MenuItem("LUseQ", "Use Q").SetValue(true));
                 LaneClear.AddItem(new MenuItem("LUseW", "Use W").SetValue(true));
                 LaneClear.AddItem(new MenuItem("LUseE", "Use E").SetValue(true));
-                LaneClear.AddItem(new MenuItem("LManaRate", "Mana %").SetValue(new Slider(20)));
+                LaneClear.AddItem(new MenuItem("LManaRate", "Min. % Mana").SetValue(new Slider(20)));
             }
             _MainMenu.AddSubMenu(LaneClear);
 
-            var JungleClear = new Menu("JungleClear", "JungleClear");
+            var JungleClear = new Menu("Jungle Clear", "JungleClear");
             {
                 JungleClear.AddItem(new MenuItem("JUse Q", "Use Q").SetValue(true));
                 JungleClear.AddItem(new MenuItem("JUse W", "Use W").SetValue(true));
                 JungleClear.AddItem(new MenuItem("JUse E", "Use E").SetValue(true));
-                JungleClear.AddItem(new MenuItem("JManaRate", "Mana %").SetValue(new Slider(20)));
+                JungleClear.AddItem(new MenuItem("JManaRate", "Min. % Mana").SetValue(new Slider(20)));
             }
             _MainMenu.AddSubMenu(JungleClear);
 
             var Misc = new Menu("Misc", "Misc");
             {
-                Misc.AddItem(new MenuItem("AutoLasthit", "Auto LastHit with Spell Q,E").SetValue(false));
-                Misc.AddItem(new MenuItem("WGap", "Auto W On GapClosers").SetValue(true));
+                Misc.AddItem(new MenuItem("AutoLasthit", "Auto Last Hit with Spell Q & E").SetValue(false));
+                Misc.AddItem(new MenuItem("WGap", "Auto W against Gapclosers").SetValue(true));
             }
             _MainMenu.AddSubMenu(Misc);
 
